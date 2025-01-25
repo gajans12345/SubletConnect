@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-function Log() {
+function Log({status}) {
     // State variables to store form input values
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,6 +19,7 @@ function Log() {
             if (response.data.password === password) {
                 console.log('Login successful!');
                 alert('Login successful!');
+                status(true);
                 // TODO: Add redirect or other success handling
             } else {
                 alert('Invalid password');
