@@ -3,7 +3,7 @@ import Log from './Log';
 import Signup from './Signup';
 function App() {
     const [showLogin, setShowLogin] = useState(false);
-    const[showSignup, setShowSignup] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
 
     return (
         <div>
@@ -12,7 +12,7 @@ function App() {
             </button>
 
             <button onClick={() => setShowSignup(!showSignup)}>
-                {showLogin ? 'Close Signup' : 'Signup'}
+                {showSignup ? 'Close Signup' : 'Signup'}
             </button>
             
             {showLogin && <Log />}

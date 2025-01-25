@@ -1,4 +1,4 @@
-function Log() {
+export default function Log() {
     return (
         <div className="login-container">
             <form className="login-form">
@@ -24,5 +24,3 @@ function Log() {
         </div>
     );
 }
-
-export default Log;
