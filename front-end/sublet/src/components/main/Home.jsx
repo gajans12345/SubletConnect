@@ -59,7 +59,7 @@ const Home = () => {
   );
 };
 
-const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => {
+const FeatureCard = ({ icon, title, description }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
       <div className="space-y-4">
@@ -70,5 +70,6 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
     </div>
   );
 };
+
 
 export default Home;
