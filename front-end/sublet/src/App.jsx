@@ -7,17 +7,23 @@ function App() {
 
     return (
         <div>
-            <button onClick={() => setShowLogin(!showLogin)}>
+            <button onClick={() => {
+                setShowLogin(!showLogin);
+                if (!showLogin) setShowSignup(false);
+            }}>
                 {showLogin ? 'Close Login' : 'Login'}
             </button>
 
-            <button onClick={() => setShowSignup(!showSignup)}>
+            <button onClick={() => {
+                setShowSignup(!showSignup);
+                if (!showSignup) setShowLogin(false);
+            }}>
                 {showSignup ? 'Close Signup' : 'Signup'}
             </button>
             
-            {showLogin && <Log />}
+            {showLogin && !showSignup && <Log />}
 
-            {showSignup && <Signup />}
+            {showSignup && !showLogin && <Signup />}
             
             {/* Your other app content */}
         </div>
