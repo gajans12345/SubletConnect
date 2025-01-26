@@ -1,75 +1,69 @@
 // Import necessary hooks and libraries
 import { useState } from 'react';
 import axios from 'axios';
+import { Mail, Lock } from 'lucide-react';
 
-function Logg({status}) {
-    // State variables to store form input values
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+function Logg({ status }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    // Form submission handler
-    const handleSubmit = async (e) => {
-        e.preventDefault();  // Prevent default form submission behavior
-        
-        try {
-            // Make GET request to backend with email parameter
-            const response = await axios.get(`http://localhost:3000/login/${email}`);
-            
-            // Compare entered password with password from database
-            if (response.data.password === password) {
-                console.log('Login successful!');
-                alert('Login successful!');
-                status(true);
-                // TODO: Add redirect or other success handling
-            } else {
-                alert('Invalid password');
-            }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        } catch (error) {
-            // Handle different types of errors
-            if (error.response?.status === 404) {
-                alert('User not found');
-            } else {
-                alert('An error occurred during login');
-            }
-        }
-    };
+    try {
+      const response = await axios.get(`http://localhost:3000/login/${email}`);
 
-    // JSX for the login form
-    return (
-        <div className="sign-container">
-            <form className="sign-form" onSubmit={handleSubmit}>
-                <h2>Login</h2>
-                
-                {/* Email input field */}
-                <div className="form-group">
-                    <label>Email:</label>
-                    <input 
-                        type="email" 
-                        placeholder="Enter your email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}  // Update email state
-                    />
-                </div>
+      if (response.data.password === password) {
+        console.log('Login successful!');
+        alert('Login successful!');
+        status(true);
+      } else {
+        alert('Invalid password');
+      }
+    } catch (error) {
+      if (error.response?.status === 404) {
+        alert('User not found');
+      } else {
+        alert('An error occurred during login');
+      }
+    }
+  };
 
-                {/* Password input field */}
-                <div className="form-group">
-                    <label>Password:</label>
-                    <input 
-                        type="password" 
-                        placeholder="Enter your password"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}  // Update password state
-                    />
-                </div>
-
-                {/* Submit button */}
-                <button type="submit">Login</button>
-            </form>
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 max-w-sm mx-auto">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">Login</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex items-center bg-gray-100 p-2 rounded-lg">
+          <Mail className="h-5 w-5 text-gray-400 ml-2" />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="flex-1 bg-transparent px-2 focus:outline-none"
+          />
         </div>
-    );
+        <div className="flex items-center bg-gray-100 p-2 rounded-lg">
+          <Lock className="h-5 w-5 text-gray-400 ml-2" />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="flex-1 bg-transparent px-2 focus:outline-none"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+        >
+          Log In
+        </button>
+      </form>
+    </div>
+  );
 }
 
-export default Logg; 
+export default Logg;

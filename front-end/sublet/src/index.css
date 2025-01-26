@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* Global Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  color: #4a5568; 
+  margin: 0;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+
+input {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+input:focus {
+  border-color: #4299e1; 
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); 
+  outline: none;
+}
