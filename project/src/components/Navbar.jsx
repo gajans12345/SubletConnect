@@ -19,9 +19,6 @@ const Navbar = () => {
           </Link>
           
           <div className="flex items-center space-x-4">
-            <Link to="/listings" className="text-gray-600 hover:text-blue-600">
-              Browse
-            </Link>
             {isLoggedIn && (
               <Link to="/post" className="text-gray-600 hover:text-blue-600">
                 Post Listing
@@ -61,8 +58,18 @@ const Navbar = () => {
       </div>
 
       {/* Login/Signup Forms */}
-      {showLogin && !showSignup && <Logg setIsLoggedIn={setIsLoggedIn} />}
-      {showSignup && !showLogin && <Sign />}
+      {showLogin && !showSignup && (
+        <Logg 
+          setIsLoggedIn={setIsLoggedIn} 
+          setShowLogin={setShowLogin}
+        />
+      )}
+      {showSignup && !showLogin && (
+        <Sign 
+          setIsLoggedIn={setIsLoggedIn} 
+          setShowSignup={setShowSignup}
+        />
+      )}
     </nav>
   );
 };

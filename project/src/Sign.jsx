@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Mail, Lock, User } from 'lucide-react';
 
-function Sign() {
+function Sign({ setIsLoggedIn, setShowSignup }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -28,29 +28,34 @@ function Sign() {
     }
   };
 
-  const signupSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Password checks
+    checkValidPassword();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:3000/signup', {
         email: email,
         password: password,
       });
 
-      if (response.status === 200) {
-        alert('Signup successful!');
+      if (response.status === 201) {
+        console.log('Signup successful, updating UI...');
+        setShowSignup(false);
+        setIsLoggedIn(true);
+        
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
       }
     } catch (error) {
       alert(error.response?.data?.message || 'An error occurred during signup');
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    checkValidPassword();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-    signupSubmit();
   };
 
   return (

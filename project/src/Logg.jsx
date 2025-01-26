@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Mail, Lock } from 'lucide-react';
 
-function Logg({ status }) {
+function Logg({ setIsLoggedIn, setShowLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,9 +14,14 @@ function Logg({ status }) {
       const response = await axios.get(`http://localhost:3000/login/${email}`);
 
       if (response.data.password === password) {
-        console.log('Login successful!');
-        alert('Login successful!');
-        status(true);
+        // First hide the login form
+        setShowLogin(false);
+        // Then update the logged in state
+        setIsLoggedIn(true);
+        
+        // Clear the form
+        setEmail('');
+        setPassword('');
       } else {
         alert('Invalid password');
       }
