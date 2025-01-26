@@ -1,11 +1,13 @@
 // Import necessary hooks and libraries
-import { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Mail, Lock } from 'lucide-react';
+import axios from 'axios';
 
-function Logg({ setIsLoggedIn, setShowLogin }) {
+function Logg({ setIsLoggedIn, setShowLogin, setUserEmail, setUserId }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,14 +16,23 @@ function Logg({ setIsLoggedIn, setShowLogin }) {
       const response = await axios.get(`http://localhost:3000/login/${email}`);
 
       if (response.data.password === password) {
-        // First hide the login form
-        setShowLogin(false);
-        // Then update the logged in state
+        // Store user data
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userId', response.data.id);
+        localStorage.setItem('isLoggedIn', 'true');
+
+        // Update state
         setIsLoggedIn(true);
+        setUserEmail(email);
+        setUserId(response.data.id);
+        setShowLogin(false);
         
         // Clear the form
         setEmail('');
         setPassword('');
+
+        // Navigate to home page
+        navigate('/');
       } else {
         alert('Invalid password');
       }
