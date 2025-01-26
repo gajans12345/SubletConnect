@@ -14,7 +14,7 @@ const pool = require('./db'); // Import the database connection
 
 // Add CORS middleware before other middleware
 app.use(cors({
-    origin: 'http://localhost:3001', // Your frontend URL
+    origin: 'http://localhost:5174', // Your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Accept']
 }));
