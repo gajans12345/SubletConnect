@@ -20,16 +20,34 @@ const App = () => {
   const [showSignup, setShowSignup] = useState(false);
 
   useEffect(() => {
+    // Test backend connection first
+    testBackendConnection();
     fetchListings();
   }, []);
 
+  const testBackendConnection = async () => {
+    try {
+      console.log('Testing backend connection...');
+      const response = await fetch('http://localhost:3001/api/test');
+      const data = await response.json();
+      console.log('Backend test response:', data);
+    } catch (error) {
+      console.error('Backend connection failed:', error);
+    }
+  };
+
   const fetchListings = async () => {
     try {
-      const response = await fetch(`${API_URL}/listings`);
+      console.log('Fetching listings from:', `${API_URL}/listings`);
+      const response = await fetch(`${API_URL}/listings`, {
+        credentials: 'include'
+      });
+      console.log('Response status:', response.status);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      console.log('Fetched listings data:', data);
       setListings(data);
     } catch (error) {
       console.error('Error fetching listings:', error);
@@ -148,11 +166,7 @@ const App = () => {
         />
         <Route 
           path="/my-listings" 
-          element={
-            isLoggedIn ? 
-              <MyListings userEmail={userEmail} userId={userId} /> : 
-              <Navigate to="/login" />
-          } 
+          element={<MyListings userEmail={userEmail} userId={userId} />}
         />
         <Route path="/listing/:id" element={<ListingDetails listings={listings} />} />
       </Routes>
